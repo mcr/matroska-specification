@@ -868,6 +868,15 @@
       <enum value="2" label="End Credits"/>
         <documentation lang="en" purpose="definition">Credits usually found at the end of the content. The ChapterAtom MUST contain a value ChapterTimeEnd.</documentation>
       </enum>
+      <enum value="3" label="Recap"/>
+        <documentation lang="en" purpose="definition">Recap of previous episodes of the content, usually found around the beginning. The ChapterAtom MUST contain a value ChapterTimeEnd.</documentation>
+      </enum>
+      <enum value="4" label="Next Preview"/>
+        <documentation lang="en" purpose="definition">Preview of the next episode of the content, usually found around the beginning. The ChapterAtom MUST contain a value ChapterTimeEnd.</documentation>
+      </enum>
+      <enum value="5" label="Preview"/>
+        <documentation lang="en" purpose="definition">Preview of the current episode of the content, usually found around the beginning. The ChapterAtom MUST contain a value ChapterTimeEnd.</documentation>
+      </enum>
     </restriction>
   </element>
   <element name="ChapterSegmentUID" path="0*1(\Segment\Chapters\EditionEntry\ChapterAtom\ChapterSegmentUID)" id="0x6E67" type="binary" maxOccurs="1" minver="1" webm="0" range="&gt;0" length="16">
