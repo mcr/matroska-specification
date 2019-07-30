@@ -1,8 +1,8 @@
 $(info RFC rendering has been tested with mmark version 1.3.4 and xml2rfc 2.5.1, please ensure these are installed and recent enough.)
 
-VERSION_MATROSKA := 01
-VERSION_CODEC := 00
-VERSION_TAGS := 00
+VERSION_MATROSKA := 04
+VERSION_CODEC := 03
+VERSION_TAGS := 03
 STATUS_MATROSKA := draft-
 STATUS_CODEC := draft-
 STATUS_TAGS := draft-
@@ -12,8 +12,14 @@ OUTPUT_TAGS := $(STATUS_TAGS)ietf-cellar-tags-$(VERSION_TAGS)
 
 all: $(OUTPUT_MATROSKA).html $(OUTPUT_MATROSKA).txt $(OUTPUT_MATROSKA).xml $(OUTPUT_CODEC).html $(OUTPUT_CODEC).txt $(OUTPUT_CODEC).xml $(OUTPUT_TAGS).html $(OUTPUT_TAGS).txt $(OUTPUT_TAGS).xml
 
-ebml_matroska_elements4rfc.md: ebml_matroska.xml transforms/ebml_schema2markdown4rfc.xsl
-	xsltproc transforms/ebml_schema2markdown4rfc.xsl ebml_matroska.xml > $@
+matroska_xsd.xml: transforms/schema_clean.xsl ebml_matroska.xml
+	xsltproc transforms/schema_clean.xsl ebml_matroska.xml > $@
+
+check: matroska_xsd.xml
+	xmllint --noout --schema ../ebml-specification/EBMLSchema.xsd matroska_xsd.xml
+
+ebml_matroska_elements4rfc.md: transforms/ebml_schema2markdown4rfc.xsl matroska_xsd.xml
+	xsltproc transforms/ebml_schema2markdown4rfc.xsl matroska_xsd.xml > $@
 
 $(OUTPUT_MATROSKA).md: index_matroska.md diagram.md matroska_schema_section_header.md ebml_matroska_elements4rfc.md ordering.md chapters.md attachments.md cues.md streaming.md menu.md notes.md
 	cat $^ | grep -v '^---' > $@
